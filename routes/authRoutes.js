@@ -14,7 +14,7 @@ const {
 // @desc   Get my quizs
 //@route  GET /auth/:id/myQuizs
 // @access Private
-router.get('/:id/myQuizs', authenticateToken, getMyQuizs);
+router.get('/user/:id/myQuizs', authenticateToken, getMyQuizs);
 
 
 // @desc   SignUp User
