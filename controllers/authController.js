@@ -66,7 +66,7 @@ const signup = asyncHandler(async (req, res) => {
     }
 
     // Hash password
-    const hashedPassword = await bcrypt.hash(password, 20);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
         name,
