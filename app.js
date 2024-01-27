@@ -33,7 +33,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //       credentials: true,
 //     })
 //   )
-app.use(cors());
+app.use(cors(
+    "Access-Control-Allow-Origin:*",
+));
 
 
 
