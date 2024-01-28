@@ -211,19 +211,26 @@ const updateQuiz = asyncHandler(async (req, res) => {
 //@route   Delete /api/quiz/:id
 const deleteQuiz = asyncHandler(async (req, res) => {
     const quiz = await Quiz.findById(req.params.id);
+
+    if (!quiz) {
+        res.status(constants.NOT_FOUND).send("Quiz not found");
+    }
+
     const userId =  quiz.createdBy;
+    console.log("userId",quiz);
 
     const user = await User.findById(userId);
      
     if(!user){
         res.status(constants.NOT_FOUND).send("User not found");
     }
-    user.CreatedQuiz.pull(quiz._id);
+    const quizId = quiz._id;
+    const index = user.CreatedQuiz.indexOf(quizId);
+    
+    user.CreatedQuiz.splice(index, 1);
+    await user.save();
 
-
-    if (!quiz) {
-        res.status(constants.NOT_FOUND).send("Quiz not found");
-    }
+   
     const deleteOne = await Quiz.deleteOne({ _id: req.params.id });
     console.log(deleteOne);
     res.status(constants.SUCCESS).send("Quiz deleted");
