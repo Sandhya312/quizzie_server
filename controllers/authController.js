@@ -30,7 +30,6 @@ const getMyQuizs = asyncHandler(async(req,res)=>{
     for(const quiz of quizs){
         const quesitionIds = quiz.questions;
 
-        console.log( " quesitionIds",quesitionIds+"quiz name"+quiz.name);
         const quizTemp=[];
         for(const questionId of quesitionIds){
             const question = await Question.findById(questionId);
@@ -54,8 +53,14 @@ const getMyQuizs = asyncHandler(async(req,res)=>{
         return acc + quiz.questions.length;
     }, 0);
 
+    const stats={
+        quizCount,
+        questionCount,
+        Totalimpression
+    }
 
-    res.status(constants.SUCCESS).send({quizs,quizCount,questionCount,Totalimpression});
+
+    res.status(constants.SUCCESS).send({quizs,stats});
 })
 
 
