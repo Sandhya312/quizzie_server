@@ -11,31 +11,15 @@ connectDb();
 
 const app = express();
 
-const corsOptions = {
-    origin: 'http://localhost:5173', // or an array of allowed origins
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // enable credentials (cookies, authorization headers, etc.)
-    optionsSuccessStatus: 204,
-  };
-  
-
-  
 
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(
-//     cors({
-//       origin: ["http://localhost:5173"],
-//       allowedHeaders: ["Content-Type", "Authorization", "x-csrf-token"],
-//       credentials: true,
-//     })
-//   )
-app.use(cors(
-    "Access-Control-Allow-Origin:*",
-));
+
+
+app.use(cors("Access-Control-Allow-Origin:*",));
 
 
 

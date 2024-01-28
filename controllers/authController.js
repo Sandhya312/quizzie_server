@@ -11,8 +11,6 @@ const blacklist = require('../blacklist');
 
 
 // @desc    Get all quiz
-
-
 const getMyQuizs = asyncHandler(async(req,res)=>{
     const quizs = [];
     const user = await User.findById(req.params.id);
@@ -48,8 +46,57 @@ const getMyQuizs = asyncHandler(async(req,res)=>{
         return b.impressions - a.impressions;
     })
 
+    const quizCount = quizs.length;
+    const Totalimpression = allQuizs.reduce((acc, quiz) => {
+        return acc + quiz.impressions;
+    }, 0);
 
-    res.status(constants.SUCCESS).send(quizs);
+    const questionCount = allQuizs.reduce((acc, quiz) => {
+        return acc + quiz.questions.length;
+    }, 0);
+
+
+    res.status(constants.SUCCESS).send(quizs,quizCount,questionCount,Totalimpression);
+})
+
+
+// @desc getStats
+const getStats = asyncHandler(async(req,res)=>{
+    const quizs = [];
+
+    const user = await User.findById(req.params.id);
+    if(!user){
+        res.status(constants.NOT_FOUND).send("User not found");
+    }
+
+    const quizIds = user.CreatedQuiz;
+    for(const quizId of quizIds){
+        const quiz = await Quiz.findById(quizId);
+        if(!quiz){
+            res.status(constants.NOT_FOUND).send("Quiz not found");
+        }
+        quizs.push(quiz);
+    }
+     //replace quiz questions id with question object
+     for(const quiz of quizs){
+        const quesitionIds = quiz.questions;
+
+        console.log( " quesitionIds",quesitionIds+"quiz name"+quiz.name);
+        const quizTemp=[];
+        for(const questionId of quesitionIds){
+            const question = await Question.findById(questionId);
+            quizTemp.push(question);
+        }
+        console.log(" quizTemp",quizTemp);
+        quiz.questions = quizTemp;
+    }
+  
+
+    res.status(constants.SUCCESS).send({
+        quizCount,
+        questionCount,
+        Totalimpression,
+    })
 })
 
 
