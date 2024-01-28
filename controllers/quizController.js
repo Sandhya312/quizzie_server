@@ -111,8 +111,9 @@ const getStats = asyncHandler(async (req, res) => {
 // @route   POST /api/createquiz
 const createQuiz = asyncHandler(async (req, res) => {
     const { name, quizType, questions, createdBy, impressions,timer } = req.body;
-
-
+    
+    console.log("questions",req.body);
+   
     const createdTime = formattedDate();
 
     const quesitionIdArray = [];
@@ -145,13 +146,15 @@ const createQuiz = asyncHandler(async (req, res) => {
     await quiz.save();
     
     const quizId=quiz._id;
+    
+    
+    const user = await User.findById(new mongoose.Types.ObjectId(createdBy));
+    console.log("user",user,new mongoose.Types.ObjectId(createdBy));
 
-    const user = await User.findById(createdBy);
-
-    if(user){
-        user.CreatedQuiz.push(quizId);
+    if(!user){
+        res.status(constants.NOT_FOUND).send("User not found");
     }
-
+    user.CreatedQuiz.push(quizId);
     await user.save();
 
     console.log("user",user);
@@ -208,6 +211,15 @@ const updateQuiz = asyncHandler(async (req, res) => {
 //@route   Delete /api/quiz/:id
 const deleteQuiz = asyncHandler(async (req, res) => {
     const quiz = await Quiz.findById(req.params.id);
+    const userId =  quiz.createdBy;
+
+    const user = await User.findById(userId);
+     
+    if(!user){
+        res.status(constants.NOT_FOUND).send("User not found");
+    }
+    user.CreatedQuiz.pull(quiz._id);
+
 
     if (!quiz) {
         res.status(constants.NOT_FOUND).send("Quiz not found");

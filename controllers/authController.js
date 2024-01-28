@@ -17,7 +17,15 @@ const getMyQuizs = asyncHandler(async(req,res)=>{
     if(!user){
         res.status(constants.NOT_FOUND).send("User not found");
     }
+     console.log("legnth",user);
+
+    if(user.CreatedQuiz.length===0){
+        console.log("No Quiz Found");
+        res.status(constants.NOT_FOUND).send("No Quiz Found");
+    }
+
     const quizIds = user.CreatedQuiz;
+    console.log("quizIds",quizIds);
     for(const quizId of quizIds){
         const quiz = await Quiz.findById(quizId);
         if(!quiz){
@@ -26,16 +34,21 @@ const getMyQuizs = asyncHandler(async(req,res)=>{
         quizs.push(quiz);
     }
 
+    console.log("quizs",quizs)
+
     //replace quiz questions id with question object
     for(const quiz of quizs){
-        const quesitionIds = quiz.questions;
+        console.log("quiz",quiz);
 
-        const quizTemp=[];
+        const quesitionIds = quiz?.questions;
+        console.log("questins",quiz?.questions);
+
+        const questionTemp=[];
         for(const questionId of quesitionIds){
             const question = await Question.findById(questionId);
-            quizTemp.push(question);
+            questionTemp.push(question);
         }
-        quiz.questions = quizTemp;
+        quiz.questions = questionTemp;
     }
     
 
