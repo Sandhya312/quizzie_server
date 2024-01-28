@@ -5,7 +5,6 @@ const router = express.Router();
 
 const {
     getMyQuizs,
-    getStats,
     signup,
     login,
     logout,
@@ -16,13 +15,6 @@ const {
 //@route  GET /auth/:id/myQuizs
 // @access Private
 router.get('/user/:id/myQuizs', authenticateToken, getMyQuizs);
-
-
-
-// @desc   Get my quizs
-//@route  GET /auth/:id/myQuizs
-// @access Private
-router.get('/user/:id/quizstats', authenticateToken, getStats);
 
 
 // @desc   SignUp User
