@@ -6,8 +6,8 @@ const questionSchema = new mongoose.Schema({
         required:true,
     },
     type:{
-        type:Boolean,  // 0 - QnA , 1 - Poll  
-        // required:true,
+        type:Number,  // 0 - text , 1 - image, 2 - text with image
+        required:true,
     },
     analysis:{
         type:Array,
@@ -16,7 +16,7 @@ const questionSchema = new mongoose.Schema({
     },
     options:{
         type:Array,
-        default:[{type:0,value:[],correctOpt:false}],
+        default:[{value:[],correctOpt:false}],
 
     },
   
