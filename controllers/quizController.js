@@ -18,13 +18,13 @@ const getAllQuizs = asyncHandler(async (req, res) => {
         const quesitionIds = quiz.questions;
 
         console.log( " quesitionIds",quesitionIds+"quiz name"+quiz.name);
-        const quizTemp=[];
+        const questionTemp=[];
         for(const questionId of quesitionIds){
             const question = await Question.findById(questionId);
-            quizTemp.push(question);
+            questionTemp.push(question);
         }
-        console.log(" quizTemp",quizTemp);
-        quiz.questions = quizTemp;
+        console.log(" questionTemp",questionTemp);
+        quiz.questions = questionTemp;
     }
     
 
@@ -42,12 +42,13 @@ const getAllQuizs = asyncHandler(async (req, res) => {
 //@route    GET / api/quiz/:id
 const singleQuiz = asyncHandler(async (req, res) => {
     const quiz = await Quiz.findById(req.params.id);
-    let questions = [];
     if (!quiz) {
         console.log("Quiz not found");
         res.status(constants.NOT_FOUND).send("Quiz not found");
     }
-    const questionIds = quiz.questions;
+    let questions = [];
+
+    const questionIds = quiz?.questions;
     for (const questionId of questionIds) {
         const question = await Question.findById(questionId);
         if (!question) {
@@ -55,7 +56,7 @@ const singleQuiz = asyncHandler(async (req, res) => {
             res.status(constants.NOT_FOUND).send("Question not found");
         }
         questions.push(question);
-         
+        quiz.questions=questions;
     }
 
     res.status(constants.SUCCESS).send(quiz);
