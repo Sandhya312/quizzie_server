@@ -16,7 +16,7 @@ const questionSchema = new mongoose.Schema({
     },
     options:{
         type:Array,
-        default:[{value:[],correctOpt:false}],
+        default:[{type:0,value:[],correctOpt:false}],
 
     },
   
