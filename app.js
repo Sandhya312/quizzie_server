@@ -19,9 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-// app.use(cors("Access-Control-Allow-Origin:*",));
-app.use(cors());
-
+app.use(cors("Access-Control-Allow-Origin:*",));
 
 
 
