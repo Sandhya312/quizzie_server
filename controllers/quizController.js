@@ -113,7 +113,7 @@ const getStats = asyncHandler(async (req, res) => {
 const createQuiz = asyncHandler(async (req, res) => {
     const { name, quizType, questions, createdBy, impressions,timer } = req.body;
     
-    console.log("questions",req.body);
+    console.log("questions",req.body,createdBy);
    
     const createdTime = formattedDate();
 
@@ -162,6 +162,20 @@ const createQuiz = asyncHandler(async (req, res) => {
 
     res.status(constants.SUCCESS).json(quiz);
 
+})
+
+
+// @desc    adding question analysis
+// @route   POST /api/quiz/question/:id/analysis
+const addQuestionAnalysis = asyncHandler(async (req,res)=>{
+    const {analysis} = req.body;
+    const question = await Question.findById(req.params.id);
+    if(!question){
+        res.status(constants.NOT_FOUND).send("Question not found");
+    }
+    question.analysis = analysis;
+    await question.save();
+    res.status(constants.SUCCESS).send(question);
 })
 
 
@@ -261,5 +275,6 @@ module.exports = {
     createQuiz,
     deleteQuiz,
     updateQuiz,
-    getStats
+    getStats,
+    addQuestionAnalysis
 }

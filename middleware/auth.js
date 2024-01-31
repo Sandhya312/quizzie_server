@@ -11,8 +11,6 @@ const authenticateToken =asyncHandler(async(req,res,next)=>{
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    
-    
     if(!token) return res.status(constants.UNAUTHORIZED).send("Token not found");
     
     console.log('blacklist',blacklist);

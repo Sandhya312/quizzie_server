@@ -30,7 +30,7 @@ router.post('/login', login);
 
 
 // @desc   Logout User
-//@route  GET /auth/logout
+//@route  post /auth/logout
 // @access Private
 router.post('/logout', authenticateToken, logout);
 
