@@ -59,6 +59,9 @@ const singleQuiz = asyncHandler(async (req, res) => {
         quiz.questions=questions;
     }
 
+     // Set the Content-Type header to application/json
+  res.setHeader('Content-Type', 'application/json');
+
     res.status(constants.SUCCESS).send(quiz);
 });
 
