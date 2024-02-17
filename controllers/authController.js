@@ -111,8 +111,10 @@ const signup = asyncHandler(async (req, res) => {
 const login = asyncHandler(async (req, res) => {
     const users = await User.find({});
     const { email, password } = req.body;
-    console.log("email", users);
+    console.log("email", email);
     const userExists = await User.findOne({ email: email });
+    console.log("userExists", userExists);
+
     console.log("45");
 
 

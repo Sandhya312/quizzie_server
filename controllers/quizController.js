@@ -78,7 +78,6 @@ const quizAnalytics = asyncHandler(async (req, res) => {
         analytics.push(question.analysis);
     }
 
-
     res.status(constants.SUCCESS).send({
         "analytics": analytics,
         "quizType": quiz.quizType,
@@ -165,6 +164,18 @@ const createQuiz = asyncHandler(async (req, res) => {
 
     res.status(constants.SUCCESS).json(quiz);
 
+})
+
+
+const addQuizAnalytics = asyncHandler(async(req,res)=>{
+    const {quiz_impression} =req.body;
+    const quiz = await Quiz.findById(req.params.id);
+    if(!quiz){
+        res.status(constants.NOT_FOUND).send("Quiz not found");
+    }
+    quiz.impressions= quiz_impression;
+    await quiz.save();
+    res.status(constants.SUCCESS).send(quiz);
 })
 
 
@@ -279,5 +290,6 @@ module.exports = {
     deleteQuiz,
     updateQuiz,
     getStats,
-    addQuestionAnalysis
+    addQuestionAnalysis,
+    addQuizAnalytics
 }

@@ -13,7 +13,8 @@ const {
     getStats,
     deleteQuiz,
     updateQuiz,
-    addQuestionAnalysis
+    addQuestionAnalysis,
+    addQuizAnalytics
     
 } = require('../controllers/quizController');
 
@@ -53,6 +54,11 @@ router.post('/createquiz',authenticateToken,createQuiz)
 // @route   PUT /api/quiz/:id
 // @access  Private
 router.put('/:id',authenticateToken,updateQuiz);
+
+// @desc    adding question analysis
+// @route   POST /api/quiz/question/:id/analysis
+// @access  Public
+router.post('/:id/analysis',addQuizAnalytics);
 
 // @desc    Delete quiz
 // @route   DELETE /api/quiz/:id
