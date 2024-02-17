@@ -10,8 +10,8 @@ const questionSchema = new mongoose.Schema({
         required:true,
     },
     analysis:{
-        type:Array,
-        default:[{option:"slfdd"}],
+        type:Object,
+        default:{option:"slfdd"},
         required:true,
     },
     options:{
