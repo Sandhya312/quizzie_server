@@ -169,6 +169,7 @@ const createQuiz = asyncHandler(async (req, res) => {
 
 const addQuizAnalytics = asyncHandler(async(req,res)=>{
     const {quiz_impression} =req.body;
+    console.log(req.body,req.params);
     const quiz = await Quiz.findById(req.params.id);
     if(!quiz){
         res.status(constants.NOT_FOUND).send("Quiz not found");
