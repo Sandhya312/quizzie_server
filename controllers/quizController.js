@@ -175,7 +175,7 @@ const addQuizAnalytics = asyncHandler(async(req,res)=>{
     }
     quiz.impressions= quiz_impression;
     await quiz.save();
-    res.status(constants.SUCCESS).send(quiz);
+    res.status(constants.SUCCESS).send(quiz.impressions);
 })
 
 
