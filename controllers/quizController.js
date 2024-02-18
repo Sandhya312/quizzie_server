@@ -181,16 +181,17 @@ const addQuizAnalytics = asyncHandler(async(req,res)=>{
 
 
 // @desc    adding question analysis
-// @route   POST /api/quiz/question/:id/analysis
+// @route   POST /api/quiz/:id/question/analysis
 const addQuestionAnalysis = asyncHandler(async (req,res)=>{
     const {analysis} = req.body;
-    const question = await Question.findById(req.params.id);
-    if(!question){
-        res.status(constants.NOT_FOUND).send("Question not found");
+    console.log(analysis);
+    const quiz = await Quiz.findById(req.params.id);
+    if(!quiz){
+        res.status(constants.NOT_FOUND).send("Quiz not found");
     }
-    question.analysis = analysis;
-    await question.save();
-    res.status(constants.SUCCESS).send(question);
+    quiz.analysis = analysis;
+    await quiz.save();
+    res.status(constants.SUCCESS).send(quiz);
 })
 
 

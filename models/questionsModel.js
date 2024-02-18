@@ -11,7 +11,7 @@ const questionSchema = new mongoose.Schema({
     },
     analysis:{
         type:Object,
-        default:[{option:"slfdd"}],
+        default:{},
         required:true,
     },
     options:{

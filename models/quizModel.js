@@ -10,6 +10,9 @@ const quizSchema = new mongoose.Schema({
         type:Boolean,  // 0 - QnA , 1 - Poll  
         required:true,
     },
+    analysis:{
+        type:Array,
+    },
     impressions:{
         type:Number,
         default:0,

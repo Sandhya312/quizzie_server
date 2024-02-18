@@ -46,9 +46,9 @@ router.post('/createquiz',authenticateToken,createQuiz)
 
 
 // @desc    adding question analysis
-// @route   POST /api/quiz/question/:id/analysis
+// @route   POST /api/quiz/:id/question/analysis
 // @access  Public
- router.post('/question/:id/analysis',addQuestionAnalysis);
+ router.post('/:id/question/analysis',addQuestionAnalysis);
 
 // @desc    Update quiz
 // @route   PUT /api/quiz/:id
